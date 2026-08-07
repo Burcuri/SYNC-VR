@@ -798,7 +798,7 @@
 
 <!-- GEREKLİ KÜTÜPHANELER -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/loaders/GLTFLoader.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/loaders/GLBLoader.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
 
@@ -824,12 +824,12 @@
   directionalLight.position.set(5, 5, 5);
   scene.add(directionalLight);
 
-  // 3. Modeli Doğrudan GLTF Dosyasından Yükleme
+  // 3. Modeli Doğrudan GLB Dosyasından Yükleme
   let tshirtModel = null;
-  const loader = new THREE.GLTFLoader();
+  const loader = new THREE.GLBLoader();
 
-  loader.load('scene.gltf', function (gltf) {
-      tshirtModel = gltf.scene;
+  loader.load('scene.glb', function (glb) {
+      tshirtModel = glb.scene;
 
       // Modeli merkeze alma ve ekrana sığacak şekilde boyutlandırma
       const box = new THREE.Box3().setFromObject(tshirtModel);
