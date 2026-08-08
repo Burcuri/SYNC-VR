@@ -864,8 +864,8 @@
 
       // Başlangıç pozisyonu (Hero alanı için ekranın sağı) — ortalanmış
       // model üzerine ek ofset olarak uygulanıyor
-      tshirtModel.position.x += 1.5;
-      tshirtModel.rotation.set(0, -0.4, 0);
+      tshirtModel.position.set(2.10, -1.80, -0.65);
+      tshirtModel.rotation.set(0.11, -0.53, 0.05);
 
       scene.add(tshirtModel);
       statusEl.style.display = 'none'; // Yüklendiğinde uyarıyı gizle
@@ -883,11 +883,11 @@
   function initAnimations() {
       gsap.registerPlugin(ScrollTrigger);
 
-      // --- HİZMETLER: Omuz / yaka detayı — sağda, yakın plan, portre açı ---
+      // --- HİZMETLER (kalibre edilmiş) ---
       gsap.to(tshirtModel.position, {
-          x: 1.8,
-          y: -1.0,   // yukarıyı (omuz/yaka) kadraja çeker
-          z: 4,      // kameraya yaklaşır = zoom
+          x: 0.00,
+          y: -3.00,
+          z: 1.55,
           ease: "none",
           scrollTrigger: {
               trigger: "#hizmetler",
@@ -897,9 +897,9 @@
           }
       });
       gsap.to(tshirtModel.rotation, {
-          x: 0.05,
-          y: 0.25,
-          z: 0,
+          x: 0.00,
+          y: 0.00,
+          z: 0.00,
           ease: "none",
           scrollTrigger: {
               trigger: "#hizmetler",
@@ -909,11 +909,11 @@
           }
       });
 
-      // --- SÜREÇ: Genel görünüm — bu kez solda (taraf değişimi) ---
+      // --- SÜREÇ (kalibre edilmiş) ---
       gsap.to(tshirtModel.position, {
-          x: -1.6,
-          y: 0,
-          z: 0,      // hero ile aynı mesafe, sadece taraf değişti
+          x: 0.00,
+          y: -3.00,
+          z: 3.50,
           ease: "none",
           scrollTrigger: {
               trigger: "#surec",
@@ -923,9 +923,9 @@
           }
       });
       gsap.to(tshirtModel.rotation, {
-          x: 0,
-          y: -0.35,
-          z: 0,
+          x: 0.00,
+          y: 0.00,
+          z: 0.00,
           ease: "none",
           scrollTrigger: {
               trigger: "#surec",
@@ -935,11 +935,11 @@
           }
       });
 
-      // --- ÇALIŞMALAR: Omuz detayı tekrar — bu kez solda ---
+      // --- ÇALIŞMALAR (kalibre edilmiş) ---
       gsap.to(tshirtModel.position, {
-          x: -1.8,
-          y: -1.0,
-          z: 4,
+          x: -1.35,
+          y: -3.00,
+          z: 6.10,
           ease: "none",
           scrollTrigger: {
               trigger: "#calismalar",
@@ -949,9 +949,9 @@
           }
       });
       gsap.to(tshirtModel.rotation, {
-          x: 0.05,
-          y: -0.25,
-          z: 0,
+          x: 0.00,
+          y: 0.08,
+          z: 0.00,
           ease: "none",
           scrollTrigger: {
               trigger: "#calismalar",
@@ -961,11 +961,11 @@
           }
       });
 
-      // --- İLETİŞİM (final): Yaka detayı — solda, en yakın kadraj ---
+      // --- İLETİŞİM (final, kalibre edilmiş) ---
       gsap.to(tshirtModel.position, {
-          x: -1.9,
-          y: -1.45,  // en tepedeki yaka/boyun bölgesini kadraja çeker
-          z: 5.5,    // en yakın zoom
+          x: -2.75,
+          y: -1.85,
+          z: 0.80,
           ease: "none",
           scrollTrigger: {
               trigger: "#iletisim",
@@ -975,9 +975,9 @@
           }
       });
       gsap.to(tshirtModel.rotation, {
-          x: 0.1,
-          y: -0.15,
-          z: 0,
+          x: 0.00,
+          y: 0.65,
+          z: 0.00,
           ease: "none",
           scrollTrigger: {
               trigger: "#iletisim",
