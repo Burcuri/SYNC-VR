@@ -823,6 +823,8 @@
   const directionalLight = new THREE.DirectionalLight(0xffffff, 1);
   directionalLight.position.set(5, 5, 5);
   scene.add(directionalLight);
+  const hemiLight = new THREE.HemisphereLight(0xffffff, 0x232042, 0.9);
+  scene.add(hemiLight);
 
   // 3. Modeli Doğrudan GLB Dosyasından Yükleme
   let tshirtModel = null;
@@ -833,15 +835,36 @@
 
       // Modeli merkeze alma ve ekrana sığacak şekilde boyutlandırma
       const box = new THREE.Box3().setFromObject(tshirtModel);
-      const center = box.getCenter(new THREE.Vector3());
       const size = box.getSize(new THREE.Vector3());
       const maxDim = Math.max(size.x, size.y, size.z);
 
-      tshirtModel.position.sub(center);
-      tshirtModel.scale.setScalar(3.2 / maxDim); 
+      // ÖNCE ölçekle, SONRA gerçek (ölçeklenmiş) kutuya göre ortala —
+      // eski sırada ölçek merkezi kaydırıyordu
+      tshirtModel.scale.setScalar(3.2 / maxDim);
+      tshirtModel.updateMatrixWorld(true);
+      const scaledBox = new THREE.Box3().setFromObject(tshirtModel);
+      const scaledCenter = scaledBox.getCenter(new THREE.Vector3());
+      tshirtModel.position.sub(scaledCenter);
 
-      // Başlangıç pozisyonu (Hero alanı için ekranın sağı)
-      tshirtModel.position.set(1.5, 0, 0);
+      // Orijinal malzeme dokusuz/karanlık kalırsa diye görünürlüğü garanti et
+      tshirtModel.traverse((n) => {
+        if (n.isMesh && n.material) {
+          const mats = Array.isArray(n.material) ? n.material : [n.material];
+          mats.forEach((m) => {
+            m.side = THREE.DoubleSide;
+            if (!m.map && (!m.color || m.color.getHex() === 0x000000)) {
+              m.color = new THREE.Color(0xaab0e6);
+              m.emissive = new THREE.Color(0x2e2f52);
+              m.emissiveIntensity = 0.5;
+            }
+            m.needsUpdate = true;
+          });
+        }
+      });
+
+      // Başlangıç pozisyonu (Hero alanı için ekranın sağı) — ortalanmış
+      // model üzerine ek ofset olarak uygulanıyor
+      tshirtModel.position.x += 1.5;
       tshirtModel.rotation.set(0, -0.4, 0);
 
       scene.add(tshirtModel);
@@ -854,6 +877,7 @@
       console.error(error);
       statusEl.textContent = "HATA: MODEL BULUNAMADI";
   });
+
 
   // 4. Parallax ve Etkileşim Animasyonları (Arı projesi mantığı)
   function initAnimations() {
